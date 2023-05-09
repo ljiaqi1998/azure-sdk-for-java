@@ -61,11 +61,6 @@ import retrofit2.Response;
 import rx.functions.Func1;
 import rx.Observable;
 
-// Custom Imports
-import java.io.OutputStream;
-import rx.exceptions.Exceptions;
-import rx.functions.Action1;
-
 /**
  * An instance of this class provides access to all the operations defined
  * in Files.
@@ -134,122 +129,6 @@ public class FilesImpl implements Files {
         @GET
         Observable<Response<ResponseBody>> listFromComputeNodeNext(@Url String nextUrl, @Header("accept-language") String acceptLanguage, @Header("client-request-id") UUID clientRequestId, @Header("return-client-request-id") Boolean returnClientRequestId, @Header("ocp-date") DateTimeRfc1123 ocpDate, @Header("User-Agent") String userAgent);
 
-    }
-
-    // CUSTOM METHOD
-    /**
-     * @param jobId The ID of the job that contains the task.
-     * @param taskId The ID of the task whose file you want to retrieve.
-     * @param filePath The path to the task file that you want to get the content of.
-     * @param outputStream The OutputStream object which data will be written to if successful.
-     * @throws IllegalArgumentException thrown if parameters fail the validation
-     * @throws BatchErrorException thrown if the request is rejected by server
-     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent
-     */
-    public void getFromTask(String jobId, String taskId, String filePath, final OutputStream outputStream) {
-        getFromTaskAsync(jobId, taskId, filePath).doOnNext(
-            new Action1<InputStream>() {
-                @Override
-                public void call(InputStream input) {
-                    byte[] data = new byte[4096];
-                    int nRead;
-                    try {
-                        while ((nRead = input.read(data, 0, data.length)) != -1) {
-                            outputStream.write(data, 0, nRead);
-                        }
-                        outputStream.flush();
-                    } catch (IOException e) {
-                        throw Exceptions.propagate(e);
-                    }
-                }
-            }).toBlocking().single();
-    }
-
-    // CUSTOM METHOD
-    /**
-     * @param taskId The ID of the task whose file you want to retrieve.
-     * @param filePath The path to the task file that you want to get the content of.
-     * @param fileGetFromTaskOptions Additional parameters for the operation
-     * @param outputStream The OutputStream object which data will be written to if successful.
-     * @throws IllegalArgumentException thrown if parameters fail the validation
-     * @throws BatchErrorException thrown if the request is rejected by server
-     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent
-     */
-    public void getFromTask(String jobId, String taskId, String filePath, FileGetFromTaskOptions fileGetFromTaskOptions, final OutputStream outputStream) {
-        getFromTaskAsync(jobId, taskId, filePath, fileGetFromTaskOptions).doOnNext(
-            new Action1<InputStream>() {
-                @Override
-                public void call(InputStream input) {
-                    byte[] data = new byte[4096];
-                    int nRead;
-                    try {
-                        while ((nRead = input.read(data, 0, data.length)) != -1) {
-                            outputStream.write(data, 0, nRead);
-                        }
-                        outputStream.flush();
-                    } catch (IOException e) {
-                        throw Exceptions.propagate(e);
-                    }
-                }
-            }).toBlocking().single();
-    }
-
-    // CUSTOM METHOD
-    /**
-     * @param poolId The ID of the pool that contains the compute node.
-     * @param nodeId The ID of the compute node that contains the file.
-     * @param filePath The path to the compute node file that you want to get the content of.
-     * @param outputStream The OutputStream object which data will be written to if successful.
-     * @throws IllegalArgumentException thrown if parameters fail the validation
-     * @throws BatchErrorException thrown if the request is rejected by server
-     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent
-     */
-    public void getFromComputeNode(String poolId, String nodeId, String filePath, final OutputStream outputStream) {
-        getFromComputeNodeAsync(poolId, nodeId, filePath).doOnNext(
-            new Action1<InputStream>() {
-                @Override
-                public void call(InputStream input) {
-                    byte[] data = new byte[4096];
-                    int nRead;
-                    try {
-                        while ((nRead = input.read(data, 0, data.length)) != -1) {
-                            outputStream.write(data, 0, nRead);
-                        }
-                        outputStream.flush();
-                    } catch (IOException e) {
-                        throw Exceptions.propagate(e);
-                    }
-                }
-            }).toBlocking().single();
-    }
-
-    // CUSTOM METHOD
-    /**
-     * @param nodeId The ID of the compute node that contains the file.
-     * @param filePath The path to the compute node file that you want to get the content of.
-     * @param fileGetFromComputeNodeOptions Additional parameters for the operation
-     * @param outputStream The OutputStream object which data will be written to if successful.
-     * @throws IllegalArgumentException thrown if parameters fail the validation
-     * @throws BatchErrorException thrown if the request is rejected by server
-     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent
-     */
-    public void getFromComputeNode(String poolId, String nodeId, String filePath, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions, final OutputStream outputStream) {
-        getFromComputeNodeAsync(poolId, nodeId, filePath, fileGetFromComputeNodeOptions).doOnNext(
-            new Action1<InputStream>() {
-                @Override
-                public void call(InputStream input) {
-                    byte[] data = new byte[4096];
-                    int nRead;
-                    try {
-                        while ((nRead = input.read(data, 0, data.length)) != -1) {
-                            outputStream.write(data, 0, nRead);
-                        }
-                        outputStream.flush();
-                    } catch (IOException e) {
-                        throw Exceptions.propagate(e);
-                    }
-                }
-            }).toBlocking().single();
     }
 
     /**

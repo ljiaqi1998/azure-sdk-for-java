@@ -39,114 +39,11 @@ import java.io.IOException;
 import java.util.List;
 import rx.Observable;
 
-// CUSTOM IMPORT
-import java.io.OutputStream;
-
 /**
  * An instance of this class provides access to all the operations defined
  * in Files.
  */
 public interface Files {
-    // CUSTOM METHOD
-    /**
-     * Returns the content of the specified task file.
-     *
-     * @param jobId
-     *            The ID of the job that contains the task.
-     * @param taskId
-     *            The ID of the task whose file you want to retrieve.
-     * @param filePath
-     *            The path to the task file that you want to get the content of.
-     * @param outputStream
-     *            The OutputStream object which data will be written to if
-     *            successful.
-     * @throws IllegalArgumentException
-     *             thrown if parameters fail the validation
-     * @throws BatchErrorException
-     *             thrown if the request is rejected by server
-     * @throws RuntimeException
-     *             all other wrapped checked exceptions if the request fails to be
-     *             sent
-     */
-    void getFromTask(String jobId, String taskId, String filePath, OutputStream outputStream);
-
-    // CUSTOM METHOD
-    /**
-     * Returns the content of the specified task file.
-     *
-     * @param jobId
-     *            The ID of the job that contains the task.
-     * @param taskId
-     *            The ID of the task whose file you want to retrieve.
-     * @param filePath
-     *            The path to the task file that you want to get the content of.
-     * @param fileGetFromTaskOptions
-     *            Additional parameters for the operation
-     * @param outputStream
-     *            The OutputStream object which data will be written to if
-     *            successful.
-     * @throws IllegalArgumentException
-     *             thrown if parameters fail the validation
-     * @throws BatchErrorException
-     *             thrown if the request is rejected by server
-     * @throws RuntimeException
-     *             all other wrapped checked exceptions if the request fails to be
-     *             sent
-     */
-    void getFromTask(String jobId, String taskId, String filePath, FileGetFromTaskOptions fileGetFromTaskOptions,
-                     OutputStream outputStream);
-
-    // CUSTOM METHOD
-    /**
-     * Returns the content of the specified task file.
-     *
-     * @param poolId
-     *            The ID of the pool that contains the compute node.
-     * @param nodeId
-     *            The ID of the compute node that contains the file.
-     * @param filePath
-     *            The path to the compute node file that you want to get the content
-     *            of.
-     * @param outputStream
-     *            The OutputStream object which data will be written to if
-     *            successful.
-     * @throws IllegalArgumentException
-     *             thrown if parameters fail the validation
-     * @throws BatchErrorException
-     *             thrown if the request is rejected by server
-     * @throws RuntimeException
-     *             all other wrapped checked exceptions if the request fails to be
-     *             sent
-     */
-    void getFromComputeNode(String poolId, String nodeId, String filePath, OutputStream outputStream);
-
-    // CUSTOM METHOD
-    /**
-     * Returns the content of the specified compute node file.
-     *
-     * @param poolId
-     *            The ID of the pool that contains the compute node.
-     * @param nodeId
-     *            The ID of the compute node that contains the file.
-     * @param filePath
-     *            The path to the compute node file that you want to get the content
-     *            of.
-     * @param fileGetFromComputeNodeOptions
-     *            Additional parameters for the operation
-     * @param outputStream
-     *            The OutputStream object which data will be written to if
-     *            successful.
-     * @throws IllegalArgumentException
-     *             thrown if parameters fail the validation
-     * @throws BatchErrorException
-     *             thrown if the request is rejected by server
-     * @throws RuntimeException
-     *             all other wrapped checked exceptions if the request fails to be
-     *             sent
-     */
-    void getFromComputeNode(String poolId, String nodeId, String filePath,
-                            FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions, OutputStream outputStream);
-
     /**
      * Deletes the specified Task file from the Compute Node where the Task ran.
      *

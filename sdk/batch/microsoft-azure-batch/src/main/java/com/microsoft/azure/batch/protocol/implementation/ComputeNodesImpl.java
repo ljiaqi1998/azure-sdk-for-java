@@ -81,11 +81,6 @@ import retrofit2.Response;
 import rx.functions.Func1;
 import rx.Observable;
 
-// Custom Imports
-import java.io.OutputStream;
-import rx.exceptions.Exceptions;
-import rx.functions.Action1;
-
 /**
  * An instance of this class provides access to all the operations defined
  * in ComputeNodes.
@@ -166,70 +161,6 @@ public class ComputeNodesImpl implements ComputeNodes {
         Observable<Response<ResponseBody>> listNext(@Url String nextUrl, @Header("accept-language") String acceptLanguage, @Header("client-request-id") UUID clientRequestId, @Header("return-client-request-id") Boolean returnClientRequestId, @Header("ocp-date") DateTimeRfc1123 ocpDate, @Header("User-Agent") String userAgent);
 
     }
-
-    //CUSTOM METHOD
-    /**
-     * Gets the Remote Desktop Protocol file for the specified compute node.
-     * Before you can access a node by using the RDP file, you must create a user account on the node. This API can only be invoked on pools created with a cloud service configuration. For pools created with a virtual machine configuration, see the GetRemoteLoginSettings API.
-     *
-     * @param poolId The ID of the pool that contains the compute node.
-     * @param nodeId The ID of the compute node for which you want to get the Remote Desktop Protocol file.
-     * @param outputStream The OutputStream object which data will be written to if successful.
-     * @throws IllegalArgumentException thrown if parameters fail the validation
-     * @throws BatchErrorException thrown if the request is rejected by server
-     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent
-     */
-    public void getRemoteDesktop(String poolId, String nodeId, final OutputStream outputStream) {
-        getRemoteDesktopAsync(poolId, nodeId).doOnNext(
-            new Action1<InputStream>() {
-                @Override
-                public void call(InputStream input) {
-                    byte[] data = new byte[4096];
-                    int nRead;
-                    try {
-                        while ((nRead = input.read(data, 0, data.length)) != -1) {
-                            outputStream.write(data, 0, nRead);
-                        }
-                        outputStream.flush();
-                    } catch (IOException e) {
-                        throw Exceptions.propagate(e);
-                    }
-                }
-            }).toBlocking().single();
-    }
-
-    // CUSTOM METHOD
-    /**
-     * Gets the Remote Desktop Protocol file for the specified compute node.
-     * Before you can access a node by using the RDP file, you must create a user account on the node. This API can only be invoked on pools created with a cloud service configuration. For pools created with a virtual machine configuration, see the GetRemoteLoginSettings API.
-     *
-     * @param poolId The ID of the pool that contains the compute node.
-     * @param nodeId The ID of the compute node for which you want to get the Remote Desktop Protocol file.
-     * @param computeNodeGetRemoteDesktopOptions Additional parameters for the operation
-     * @param outputStream The OutputStream object which data will be written to if successful.
-     * @throws IllegalArgumentException thrown if parameters fail the validation
-     * @throws BatchErrorException thrown if the request is rejected by server
-     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent
-     */
-    public void getRemoteDesktop(String poolId, String nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions, final OutputStream outputStream) {
-        getRemoteDesktopAsync(poolId, nodeId, computeNodeGetRemoteDesktopOptions).doOnNext(
-            new Action1<InputStream>() {
-                @Override
-                public void call(InputStream input) {
-                    byte[] data = new byte[4096];
-                    int nRead;
-                    try {
-                        while ((nRead = input.read(data, 0, data.length)) != -1) {
-                            outputStream.write(data, 0, nRead);
-                        }
-                        outputStream.flush();
-                    } catch (IOException e) {
-                        throw Exceptions.propagate(e);
-                    }
-                }
-            }).toBlocking().single();
-    }
-
 
     /**
      * Adds a user Account to the specified Compute Node.

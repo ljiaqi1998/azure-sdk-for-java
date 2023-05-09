@@ -50,42 +50,15 @@ import com.microsoft.rest.ServiceCallback;
 import com.microsoft.rest.ServiceFuture;
 import com.microsoft.rest.ServiceResponseWithHeaders;
 import java.io.InputStream;
+import java.io.IOException;
 import java.util.List;
 import rx.Observable;
-
-// CUSTOM IMPORT
-import java.io.OutputStream;
 
 /**
  * An instance of this class provides access to all the operations defined
  * in ComputeNodes.
  */
 public interface ComputeNodes {
-    // CUSTOM METHOD
-    /**
-     *
-     * @param poolId The ID of the pool that contains the compute node.
-     * @param nodeId The ID of the compute node for which you want to get the Remote Desktop Protocol file.
-     * @param outputStream The OutputStream object which data will be written to if successful.
-     * @throws IllegalArgumentException thrown if parameters fail the validation
-     * @throws BatchErrorException thrown if the request is rejected by server
-     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent
-     */
-    void getRemoteDesktop(String poolId, String nodeId, OutputStream outputStream);
-
-    // CUSTOM METHOD
-    /**
-     * Gets the Remote Desktop Protocol file for the specified compute node.
-     * @param poolId The ID of the pool that contains the compute node.
-     * @param nodeId The ID of the compute node for which you want to get the Remote Desktop Protocol file.
-     * @param computeNodeGetRemoteDesktopOptions Additional parameters for the operation
-     * @param outputStream The OutputStream object which data will be written to if successful.
-     * @throws IllegalArgumentException thrown if parameters fail the validation
-     * @throws BatchErrorException thrown if the request is rejected by server
-     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent
-     */
-    void getRemoteDesktop(String poolId, String nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions, OutputStream outputStream);
-
     /**
      * Adds a user Account to the specified Compute Node.
      * You can add a user Account to a Compute Node only when it is in the idle or running state.
